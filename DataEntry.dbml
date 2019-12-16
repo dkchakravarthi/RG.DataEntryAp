@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="InsiteFO" Class="DataEntryDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=qawebdbsql;Initial Catalog=InsiteFO;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="InsiteFOConnectionString" Provider="System.Data.SqlClient" />
+  <Function Name="DataEntry.GetProducts" Method="GetProducts">
+    <Parameter Name="Search" Parameter="search" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="GetProductsResult">
+      <Column Name="ShortDescription" Type="System.String" DbType="NVarChar(2048) NOT NULL" CanBeNull="false" />
+      <Column Name="ERPNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MetaDescription" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetCategories" Method="GetCategories">
+    <Parameter Name="ParentId" Parameter="parentId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetCategoriesResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetInfoTemplates" Method="GetInfoTemplates">
+    <ElementType Name="GetInfoTemplatesResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetProductAttributes" Method="GetProductAttributes">
+    <Parameter Name="ItemNumber" Parameter="itemNumber" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="GetProductAttributesResult">
+      <Column Name="AttributeTypeId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="AttributeTypeName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="AttributeTypeLabel" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="AttributeValueId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="AttributeValue" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetProduct" Method="GetProduct">
+    <Parameter Name="ItemNumber" Parameter="itemNumber" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="GetProductResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ShortDescription" Type="System.String" DbType="NVarChar(2048) NOT NULL" CanBeNull="false" />
+      <Column Name="ERPNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ProductManager" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="SupplyManager" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="CategoryID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Category" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CategoryPath" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="InfoTemplateID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="InfoTemplate" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="MetaDescription" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AdditionalSpecs" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="PleaseNote" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="AvailableInKitSetAsst" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="KitSetincludes" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="MetaKeywords" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="SaleUomName" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="CatalogPage" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="NetWeight" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="ShipWeight" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="NewItemMeetingDate" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="PrintGridDesc" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="ProdCatSection" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="ProdPageNmbr" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="ProductnamePrint" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="ProductPrintDesc" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="CustomService" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="IsExclusive" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="ProductVariantID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="ProductVariantItemNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ProductVariantStyleClassID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetAllVariants" Method="GetAllVariants">
+    <ElementType Name="GetAllVariantsResult">
+      <Column Name="StyleClassID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetProductVariants" Method="GetProductVariants">
+    <Parameter Name="ProductID" Parameter="productID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetProductVariantsResult">
+      <Column Name="ProductID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(512) NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitValueID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="SortOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetUpdateStyleTraitValues" Method="GetUpdateStyleTraitValues">
+    <Parameter Name="StyleTraitID" Parameter="styleTraitID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetUpdateStyleTraitValuesResult">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="SortOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetAllStyleTraitValues" Method="GetAllStyleTraitValues">
+    <Parameter Name="StyleClassID" Parameter="styleClassID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetAllStyleTraitValuesResult">
+      <Column Name="StyleClassID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="StyleClassName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitSortOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitDescription" Type="System.String" DbType="NVarChar(512) NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitValueID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="StyleTraitValue" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="StyleTraitValueSortOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetStyleTraitValues" Method="GetStyleTraitValues">
+    <Parameter Name="StyleTraitID" Parameter="styleTraitID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetStyleTraitValuesResult">
+      <Column Name="StyleTraitID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitSortOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitDescription" Type="System.String" DbType="NVarChar(512) NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitValueID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="StyleTraitValue" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="StyleTraitValueSortOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.UpdateStyleTraitValueSortOrder" Method="UpdateStyleTraitValueSortOrder">
+    <Parameter Name="StyleTraitValueID" Parameter="styleTraitValueID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SortOrder" Parameter="sortOrder" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ModifiedBy" Parameter="modifiedBy" Type="System.String" DbType="VarChar(80)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="DataEntry.UpdateProductAttributes" Method="UpdateProductAttributes">
+    <Parameter Name="ProductId" Parameter="productId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="AttributeValueIds" Parameter="attributeValueIds" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="DataEntry.UpdateStyleTraitValueProducts" Method="UpdateStyleTraitValueProducts">
+    <Parameter Name="ProductId" Parameter="productId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="StyleTraitValueIds" Parameter="styleTraitValueIds" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="DataEntry.SwitchStyleTraitPositions" Method="SwitchStyleTraitPositions">
+    <Parameter Name="StyleTraitIds" Parameter="styleTraitIds" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="ModifiedBy" Parameter="modifiedBy" Type="System.String" DbType="VarChar(80)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="DataEntry.InsertVariantParent" Method="InsertVariantParent">
+    <Parameter Name="ItemNumber" Parameter="itemNumber" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="ShortDescription" Parameter="shortDescription" Type="System.String" DbType="NVarChar(2048)" />
+    <Parameter Name="MetaDescription" Parameter="metaDescription" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="PleaseNotes" Parameter="pleaseNotes" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="ModifiedBy" Parameter="modifiedBy" Type="System.String" DbType="VarChar(80)" />
+    <ElementType Name="InsertVariantParentResult">
+      <Column Name="StyleClassID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.InsertAttributeValue" Method="InsertAttributeValue">
+    <Parameter Name="AttributeTypeId" Parameter="attributeTypeId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="AttributeValue" Parameter="attributeValue" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="ModifiedBy" Parameter="modifiedBy" Type="System.String" DbType="VarChar(80)" />
+    <ElementType Name="InsertAttributeValueResult">
+      <Column Name="AttributeValueId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.InsertStyleTrait" Method="InsertStyleTrait">
+    <Parameter Name="StyleClassID" Parameter="styleClassID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="SortOrder" Parameter="sortOrder" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ModifiedBy" Parameter="modifiedBy" Type="System.String" DbType="VarChar(80)" />
+    <ElementType Name="InsertStyleTraitResult">
+      <Column Name="StyleTraitID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.InsertStyleTraitValue" Method="InsertStyleTraitValue">
+    <Parameter Name="StyleTraiteID" Parameter="styleTraiteID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Value" Parameter="value" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="SortOrder" Parameter="sortOrder" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ModifiedBy" Parameter="modifiedBy" Type="System.String" DbType="VarChar(80)" />
+    <ElementType Name="InsertStyleTraitValueResult">
+      <Column Name="StyleTraitValueID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetAttributeTypeSettings" Method="GetAttributeTypeSettings">
+    <ElementType Name="GetAttributeTypeSettingsResult">
+      <Column Name="AttributeTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Setting" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.InsertError" Method="InsertError">
+    <Parameter Name="UserName" Parameter="userName" Type="System.String" DbType="VarChar(80)" />
+    <Parameter Name="Message" Parameter="message" Type="System.String" DbType="VarChar(4000)" />
+    <Parameter Name="StackTrace" Parameter="stackTrace" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="Source" Parameter="source" Type="System.String" DbType="VarChar(1000)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="DataEntry.GetProductAndCategoryAttributesAndValues" Method="GetProductAndCategoryAttributesAndValues">
+    <Parameter Name="ItemNumber" Parameter="itemNumber" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="CategoryId" Parameter="categoryId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetProductAndCategoryAttributesAndValuesResult">
+      <Column Name="AttributeTypeId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="Label" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="AttributeValueId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="IsDefaultAttributeType" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.UpdateProduct" Method="UpdateProduct">
+    <Parameter Name="ProductID" Parameter="productID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ItemNumber" Parameter="itemNumber" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="ShortDescription" Parameter="shortDescription" Type="System.String" DbType="NVarChar(2048)" />
+    <Parameter Name="CategoryId" Parameter="categoryId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="InfoTemplateId" Parameter="infoTemplateId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="AvailableInKitSetAsst" Parameter="availableInKitSetAsst" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="MetaDescription" Parameter="metaDescription" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="AdditionalSpecs" Parameter="additionalSpecs" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="PleaseNotes" Parameter="pleaseNotes" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="MetaKeywords" Parameter="metaKeywords" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="KitSetincludes" Parameter="kitSetincludes" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="NewItemMeetingDate" Parameter="newItemMeetingDate" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="PrintGridDesc" Parameter="printGridDesc" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="ProdCatSection" Parameter="prodCatSection" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="ProdPageNmbr" Parameter="prodPageNmbr" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="ProductnamePrint" Parameter="productnamePrint" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="ProductPrintDesc" Parameter="productPrintDesc" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="StyleClassID" Parameter="styleClassID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ModifiedBy" Parameter="modifiedBy" Type="System.String" DbType="VarChar(80)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="DataEntry.GetProductsInStyleClass" Method="GetProductsInStyleClass">
+    <Parameter Name="StyleClassID" Parameter="styleClassID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetProductsInStyleClassResult">
+      <Column Name="ProductID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ItemNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="StyleTraitId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="StyleTraitName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="StyleTraitDescription" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
+      <Column Name="StyleTraitValueId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="StyleTraitValue" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.RemoveProductFromVariant" Method="RemoveProductFromVariant">
+    <Parameter Name="ProductID" Parameter="productID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ModifiedBy" Parameter="modifiedBy" Type="System.String" DbType="VarChar(80)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="DataEntry.GetAllChemicals" Method="GetAllChemicals">
+    <ElementType Name="GetAllChemicalsResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Chemical" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="TypeOfToxicity" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.GetProductChemicals" Method="GetProductChemicals">
+    <Parameter Name="ProductId" Parameter="productId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType Name="GetProductChemicalsResult">
+      <Column Name="ProductChemicalsId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ChemicalId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Chemical" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="TypeOfToxicity" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="DataEntry.UpdateProductChemicals" Method="UpdateProductChemicals">
+    <Parameter Name="ProductId" Parameter="productId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ChemicalIds" Parameter="chemicalIds" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

@@ -1,0 +1,346 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry</title>
+    <script>
+        var ROOT = '@Url.Content("~")';
+    </script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet">
+    <script src="@Url.Content("~/Scripts/vendors/ckeditor/ckeditor.js")"></script>
+    <script src="@Url.Content("~/Scripts/ajax.js")"></script>
+    <script src="@Url.Content("~/Scripts/Shared.js?Rev=2")"></script>
+
+    @*
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    *@
+
+</head>
+<body>
+
+    <div id="loader" class="hidden">
+        <div class="loader-container">
+            <div class="preloader-1">
+                <div>Loading</div>
+                <span class="line line-1"></span>
+                <span class="line line-2"></span>
+                <span class="line line-3"></span>
+                <span class="line line-4"></span>
+                <span class="line line-5"></span>
+                <span class="line line-6"></span>
+                <span class="line line-7"></span>
+                <span class="line line-8"></span>
+                <span class="line line-9"></span>
+            </div>
+        </div>
+    </div>
+
+    <header>
+
+        <div id="divHeader" class="col-xs-12 header">
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <div class="spacer-md"></div>
+
+
+                    <div class="col-xs-8 col-xs-offset-2">
+                        <div class="row">
+                            <div class="col-xs-2 text-center">
+                                <img src="https://www.riogrande.com/-/media/images/rio-grande/logo/rio_flatlogo_sq.jpg" alt="Rio Grande logo" />
+                            </div>
+                            <div class="col-xs-8">
+                                <input id="search-item-input" type="text" name="search-item-input" value="" class="form-control input-lg mt-5" placeholder="Search for item number" autofocus />
+                                <small id="error" class="text-center text-danger mt-3 collapse">The item number is incorrect</small>
+                            </div>
+                            <div class="col-xs-2">
+                                <button id="seach-itm-btn" name="search-item-btn" class="btn btn-lg btn-primary mt-5">Go!</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="spacer-md"></div>
+
+                    <div class="col-xs-12 bg-primary">
+                        @if (IsSectionDefined("HeaderMenu"))
+                        {
+                            @RenderSection("HeaderMenu")
+                        }
+                        else
+                        {
+                            <h3 class="mt-5 mb-5 text-center">Data Entry</h3>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <section id="BodySection">
+        @RenderBody()
+    </section>
+
+    <footer>
+        <div class="container-fluid footer">
+
+            <div class="row">
+                <div class="col-xs-12 bg-primary text-center">
+                    <a href="http://tbg-webapp/DataEntry" target="_blank" class="footer-link">http://tbg-webapp/DataEntry</a>
+                </div>
+            </div>
+
+            <div class="spacer-md"></div>
+
+        </div>
+    </footer>
+
+
+    <div id="add-attributevalue-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="AddAttributeValueTitle">Add new value</h4>
+                </div>
+                <form id="add-attributevalue-form">
+                    <div id="parent" class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label class="control-label" for="NewAttributeValue">New value:</label>
+                                <input type="text" name="NewAttributeValue" id="NewAttributeValue" class="form-control" value="" autofocus />
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="collapse error-container">
+                                    <small class="text-danger" id="AddAttributeValueMessage">There has been an error with the submition</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-variantparent-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add new option</h4>
+                </div>
+                <form id="add-variantparent-form">
+                    <div id="variantparent" class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label class="control-label" for="new-variantparent-id">New variant parent:</label>
+                                <input type="text" name="ItemNumber" id="new-variantparent-id" class="form-control" value="" autofocus />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label class="control-label" for="new-variantparent-name">Name:</label>
+                                <input type="text" name="Name" id="new-variantparent-name" class="form-control" value="" />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label class="control-label" for="new-variantparent-desc">Description:</label>
+                                <textarea name="Description" id="new-variantparent-desc" class="form-control autoExpand" value=""></textarea>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label class="control-label" for="new-variantparent-note">Please note:</label>
+                                <textarea name="Note" id="new-variantparent-note" class="form-control autoExpand" value=""></textarea>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="collapse error-container">
+                                    <small class="text-danger" id="AddVariantParentMessage">There has been an error with the submition</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-traitvalue-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="AddStyleTraitValueTitle">Add new trait value</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form id="add-traitvalue-form">
+                            <div class="form-group col-sm-6">
+                                <label class="control-label" for="NewTraitValue">New value:</label>
+                                <input type="text" name="NewTraitValue" id="NewTraitValue" class="form-control" value="" autofocus />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="control-label" for="NewTraitValuePosition">New value position:</label>
+                                <input type="number" name="NewTraitValuePosition" id="NewTraitValuePosition" class="form-control" value="1" />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <div class="collapse error-container text-right">
+                                    <small class="text-danger" id="AddTraitValueMessage">There has been an error with the submition</small>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-primary">Add value</button>
+                            </div>
+                        </form>
+                        <form id="add-traitvalue-form-position" class="collapse">
+                            <div class="col-sm-12">
+                                <div class="spacer-md"></div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="mt-0">Other trait values</h4>
+                                        <div id="other-traitvalues" class="row">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <div class="collapse error-container text-right">
+                                    <small class="text-danger">There has been an error with the submition</small>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-primary">Save Positions &amp; Close</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-trait-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add trait name</h4>
+                </div>
+                <form id="add-trait-form">
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-sm-9">
+                                <label class="control-label" for="new-trait">Add new trait name</label>
+                                <input type="text" name="NewTraitName" id="NewTraitName" class="form-control" value="" autofocus />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label class="control-label" for="new-trait-position">Sort order</label>
+                                <input type="number" name="NewTraitPosition" id="NewTraitPosition" class="form-control" value="1" />
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12 collapse">
+                                        <h4 class="mt-0">Other values</h4>
+                                        <div id="other-traits" class="row">
+                                            <!--<div class="form-group col-sm-8">
+                                                <label class="control-label" for="other-trait">Trait name</label>
+                                                <input type="text" name="other-trait" id="other-trait" class="form-control" value="" readonly>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label class="control-label" for="other-trait-position">Sort order</label>
+                                                <input type="number" name="other-trait-position" id="new-trait-position" class="form-control" value="">
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="collapse error-container">
+                                    <small class="text-danger" id="AddTraitMessage">There has been an error with the submition</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" data-trait-num="" class="btn btn-primary">Save changes</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="unassign-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Unassign attribute</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h4>Are you sure you want to unassign this attribute</h4>
+                    </div>
+                    <div class="collapse error-container text-center">
+                        <small class="text-danger">There has been an error with the submition</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="unassign-modal-btn" class="btn btn-primary">Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="web-preview-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Web preview</h4>
+                </div>
+                <div class="modal-body">
+                    <div></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="msg" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" style="text-align: center;"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--#endregion MODALS-->
+
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

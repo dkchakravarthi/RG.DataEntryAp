@@ -1,0 +1,60 @@
+﻿@model DataEntry.Models.ProductAttributesModel
+
+@foreach (var Attribute in Model.Attributes)
+{
+    if (Attribute.Setting != "HIDDEN")
+    {
+
+        <div class="col-sm-4" style="padding-top: 10px;">
+
+            <label for="Attributes-@Attribute.Name" class="control-label @if(Attribute.IsDefaultAttributeType) { <text>text-primary</text>; } ">
+            @if (Attribute.Label == "Material" 
+                || Attribute.Label == "Style" 
+                || Attribute.Label == "Form" 
+                || Attribute.Label == "Shape" 
+                || Attribute.Label == "Type")
+            {
+                @Attribute.Name.Replace("_", " ")
+            }
+            else
+            {
+                @Attribute.Label
+            }
+            : </label><span class="display-value"></span>
+            
+
+            @switch (Attribute.Setting)
+            {
+                case "READ_ONLY":
+                    <input type="text" id="AttributesReadOnly-@Attribute.Name" name="AttributesReadOnly" class="form-control" readonly 
+                           value="@((from v in Attribute.Values where v.Selected select v.Value).FirstOrDefault())">
+
+                    <input type="hidden" id="Attributes-@Attribute.Name" name="Attributes" value="@((from v in Attribute.Values where v.Selected select v.ID).FirstOrDefault())" />
+
+                    break;
+
+                default:
+                    <div class="input-group">
+                        <select id="Attributes-@Attribute.Name" name="Attributes" class="form-control">
+                            <option value=""></option>
+                            @foreach (var Value in Attribute.Values)
+                            {
+                                <option @(Value.Selected ? "selected='selected'" : "") value="@Value.ID">@Value.Value</option>
+                            }
+                        </select>
+                        <div class="input-group-btn">
+                            @*<button type="button" class="btn btn-gray unassign-parent-btn" data-id="@Attribute.ID" data-add-target="#@Attribute.Name"><span class="glyphicon glyphicon-minus"></span></button>*@
+                            <button type="button" class="btn btn-success add-attributevalue-btn" data-id="@Attribute.ID" data-label="@Attribute.Label" data-add-target="#Attributes-@Attribute.Name"><span class="glyphicon glyphicon-plus"></span></button>
+                        </div>
+                    </div>
+
+                    break;
+            }
+        </div>
+    }
+    else
+    {
+        <input type="hidden" id="Attributes-@Attribute.Name" name="Attributes" value="@((from v in Attribute.Values where v.Selected select v.ID).FirstOrDefault())" />
+    }
+}
+

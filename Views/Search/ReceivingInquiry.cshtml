@@ -1,0 +1,1124 @@
+﻿@model DataEntry.Models.ProductModel
+
+<div class="container">
+    @if (Model.ProductInfo == null)
+    {
+        <div class="row">
+            <div class="col-md-12" style="padding-top: 40px;">
+                <h2 style="text-align: center;">Item number @Model.ItemNumber is not in Insite.</h2>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="spacer-md"></div>
+            </div>
+            <div class="col-sm-12 text-center">
+                <h1 class="mt-0">@Model.ProductInfo.ShortDescription</h1>
+                <div class="spacer-md"></div>
+            </div>
+            <div class="col-sm-4">
+                <img src="https://products.riogrande.com/products/@(Model.ItemNumber).jpg" alt="Alternate Text" class="img-responsive img-thumbnail">
+            </div>
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label for="item-number" class="control-label text-primary">Item number:</label>
+                        <input type="text" id="item-number" name="item-number" class="form-control" value="@Model.ItemNumber" readonly="">
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="product-manager" class="control-label text-primary">Product Manager:</label>
+                        <input type="text" id="product-manager" name="product-manager" class="form-control" value="@Model.ProductInfo.ProductManager" readonly="">
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="supply-manager" class="control-label text-primary">Supply Manager:</label>
+                        <input type="text" id="supply-manager" name="supply-manager" class="form-control" value="@Model.ProductInfo.SupplyManager" readonly="">
+                    </div>
+                    @*
+                        <div class="col-sm-6 form-group">
+                            <label for="category" class="control-label text-primary">Control Buyer:</label>
+                            <input type="text" id="category" name="category" class="form-control" value="@Model.ProductInfo.GroupDescription" readonly="">
+                        </div>
+                    *@
+                </div>
+            </div>
+            <div class="spacer-md"></div>
+
+            @if (Model.ProductAttributes != null && !string.IsNullOrWhiteSpace(Model.ProductAttributes.CountryOfOrigin))
+            {
+                <div class="col-sm-4 form-group">
+                    <label for="country-origin" class="control-label text-primary">Country of origin:</label>
+                    <input type="text" id="country-origin" name="country-origin" class="form-control" value="@Model.ProductAttributes.CountryOfOrigin" readonly="">
+                </div>
+            }
+
+            <div class="col-sm-4 form-group">
+                <label for="sale-uom-name" class="control-label text-primary">Selling UOM:</label>
+                <input type="text" id="sale-uom-name" name="sale-uom-name" class="form-control" value="@(Model.ProductInfo.SaleUomName.ToUpper() == "INDIVIDUALLY" ? "EACH" : Model.ProductInfo.SaleUomName.ToUpper().Replace("PER", "").Trim())" readonly="">
+            </div>
+
+            <div class="col-sm-8 form-group">
+                <div class="md-spacer"></div>
+            </div>
+
+            <div class="col-sm-8 form-group">
+                <div class="md-spacer"></div>
+            </div>
+
+            @if (Model.ProductAttributes != null)
+            {
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.MetalType))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="metal-type" class="control-label text-primary">Metal type:</label>
+                        <input type="text" id="metal-type" name="metal-type" class="form-control" value="@Model.ProductAttributes.MetalType" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.BandShankWidth))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="band-width" class="control-label text-primary">Band/shank width:</label>
+                        <input type="text" id="band-width" name="band-width" class="form-control" value="@Model.ProductAttributes.BandShankWidth" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.BailOpening))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="bail-opening" class="control-label text-primary">Bail opening:</label>
+                        <input type="text" id="bail-opening" name="bail-opening" class="form-control" value="@Model.ProductAttributes.BailOpening" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.CapInsideDimension))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="cap-dimension" class="control-label text-primary">Cap inside dimension:</label>
+                        <input type="text" id="cap-dimension" name="cap-dimension" class="form-control" value="@Model.ProductAttributes.CapInsideDimension" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.ChannelWidth))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="channel-width" class="control-label text-primary">Channel width:</label>
+                        <input type="text" id="channel-width" name="channel-width" class="form-control" value="@Model.ProductAttributes.ChannelWidth" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Color))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="color" class="control-label text-primary">Color:</label>
+                        <input type="text" id="color" name="color" class="form-control" value="@Model.ProductAttributes.Color" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.ColorNo))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="color-num" class="control-label text-primary">Color No.:</label>
+                        <input type="text" id="color-num" name="color-num" class="form-control" value="@Model.ProductAttributes.ColorNo" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.CupSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="cup-size" class="control-label text-primary">Cup size:</label>
+                        <input type="text" id="cup-size" name="cup-size" class="form-control" value="@Model.ProductAttributes.CupSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.CuttingSurfaceDimension))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="cutting-surface-dimensions" class="control-label text-primary">Cutting surface dimensions:</label>
+                        <input type="text" id="cutting-surface-dimensions" name="cutting-surface-dimensions" class="form-control" value="@Model.ProductAttributes.CuttingSurfaceDimension" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Diameter))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="diameter-width" class="control-label text-primary">Diameter/Width:</label>
+                        <input type="text" id="diameter-width" name="diameter-width" class="form-control" value="@Model.ProductAttributes.Diameter" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Dimensions))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="dimensions" class="control-label text-primary">Dimensions:</label>
+                        <input type="text" id="dimensions" name="dimensions" class="form-control" value="@Model.ProductAttributes.Dimensions" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.HeadLength))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="head-length-dimensions" class="control-label text-primary">Head length/dimensions:</label>
+                        <input type="text" id="head-length-dimensions" name="head-length-dimensions" class="form-control" value="@Model.ProductAttributes.HeadLength" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.HeadSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="head-size" class="control-label text-primary">Head size:</label>
+                        <input type="text" id="head-size" name="head-size" class="form-control" value="@Model.ProductAttributes.HeadSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Height))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="height" class="control-label text-primary">Height:</label>
+                        <input type="text" id="height" name="height" class="form-control" value="@Model.ProductAttributes.Height" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.HoleSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="hole-size" class="control-label text-primary">Hole size:</label>
+                        <input type="text" id="hole-size" name="hole-size" class="form-control" value="@Model.ProductAttributes.HoleSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.InsideDimension))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="available-kit" class="control-label text-primary">Inside dimension:</label>
+                        <input type="text" id="available-kit" name="available-kit" class="form-control" value="@Model.ProductAttributes.InsideDimension" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.InteriorDimensions))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="interior-dimension" class="control-label text-primary">Interior dimension:</label>
+                        <input type="text" id="interior-dimension" name="interior-dimension" class="form-control" value="@Model.ProductAttributes.InteriorDimensions" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.JawLength))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="jaw-length" class="control-label text-primary">Jaw length:</label>
+                        <input type="text" id="jaw-length" name="jaw-length" class="form-control" value="@Model.ProductAttributes.JawLength" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.PegSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="peg-size" class="control-label text-primary">Peg size:</label>
+                        <input type="text" id="peg-size" name="peg-size" class="form-control" value="@Model.ProductAttributes.PegSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.PinSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="pin-size" class="control-label text-primary">Pin size:</label>
+                        <input type="text" id="pin-size" name="pin-size" class="form-control" value="@Model.ProductAttributes.PinSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.PostSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="post-wire-size" class="control-label text-primary">Post/wire size:</label>
+                        <input type="text" id="post-wire-size" name="post-wire-size" class="form-control" value="@Model.ProductAttributes.PostSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.RingID))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="rings-id" class="control-label text-primary">Ring(s) ID:</label>
+                        <input type="text" id="rings-id" name="rings-id" class="form-control" value="@Model.ProductAttributes.RingID" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.RingSizeUS))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="ring-size-us" class="control-label text-primary">Ring size (U.S.):</label>
+                        <input type="text" id="ring-size-us" name="ring-size-us" class="form-control" value="@Model.ProductAttributes.RingSizeUS" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Size))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="size" class="control-label text-primary">Size:</label>
+                        <input type="text" id="size" name="size" class="form-control" value="@Model.ProductAttributes.Size" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.SizeNo))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="size-num" class="control-label text-primary">Size No.:</label>
+                        <input type="text" id="size-num" name="size-num" class="form-control" value="@Model.ProductAttributes.SizeNo" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.OutsideDimension))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="outside-dimension" class="control-label text-primary">Outside dimension:</label>
+                        <input type="text" id="outside-dimension" name="outside-dimension" class="form-control" value="@Model.ProductAttributes.OutsideDimension" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.OverallLength))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="overall-length" class="control-label text-primary">Overall length:</label>
+                        <input type="text" id="overall-length" name="overall-length" class="form-control" value="@Model.ProductAttributes.OverallLength" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.PadSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="pad-size" class="control-label text-primary">Pad size:</label>
+                        <input type="text" id="pad-size" name="pad-size" class="form-control" value="@Model.ProductAttributes.PadSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.SignetPlateSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="signet-plate-size" class="control-label text-primary">Signet plate size:</label>
+                        <input type="text" id="signet-plate-size" name="signet-plate-size" class="form-control" value="@Model.ProductAttributes.SignetPlateSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.StoneSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="stone-size" class="control-label text-primary">Stone size:</label>
+                        <input type="text" id="stone-size" name="available-kit" class="form-control" value="@Model.ProductAttributes.StoneSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.WallHeight))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="wall-height" class="control-label text-primary">Wall height:</label>
+                        <input type="text" id="wall-height" name="wall-height" class="form-control" value="@Model.ProductAttributes.WallHeight" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.WallThickness))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="wall-thickness" class="control-label text-primary">Wall thickness:</label>
+                        <input type="text" id="wall-thickness" name="wall-thickness" class="form-control" value="@Model.ProductAttributes.WallThickness" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Width))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="width" class="control-label text-primary">Width:</label>
+                        <input type="text" id="width" name="width" class="form-control" value="@Model.ProductAttributes.Width" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.WheelDiameter))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="wheel-diameter" class="control-label text-primary">Wheel diameter:</label>
+                        <input type="text" id="wheel-diameter" name="wheel-diameter" class="form-control" value="@Model.ProductAttributes.WheelDiameter" readonly="">
+                    </div>
+                }
+
+                <div class="col-sm-12"><h2 class="text-center">More Info</h2></div>
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Abrasive_Mesh))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="abrassive-mesh" class="control-label text-primary">Abrasive/mesh:</label>
+                        <input type="text" id="abrassive-mesh" name="abrassive-mesh" class="form-control" value="@Model.ProductAttributes.Abrasive_Mesh" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Accuracy))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="accuracy" class="control-label text-primary">Accuracy:</label>
+                        <input type="text" id="accuracy" name="accuracy" class="form-control" value="@Model.ProductAttributes.Accuracy" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.KitSetAsst))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="kit-assortment" class="control-label text-primary">Kit, set, assortment:</label>
+                        <input type="text" id="kit-assortment" name="kit-assortment" class="form-control" value="@Model.ProductAttributes.KitSetAsst" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.ArticleNo))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="article-num" class="control-label text-primary">Article No.:</label>
+                        <input type="text" id="article-num" name="article-num" class="form-control" value="@Model.ProductAttributes.ArticleNo" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Author_Host))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="author" class="control-label text-primary">Author/host:</label>
+                        <input type="text" id="author" name="author" class="form-control" value="@Model.ProductAttributes.Author_Host" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.BindingStyle))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="binding-style" class="control-label text-primary">Binding style:</label>
+                        <input type="text" id="binding-style" name="binding-style" class="form-control" value="@Model.ProductAttributes.BindingStyle" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Brand))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="Brand" class="control-label text-primary">Brand:</label>
+                        <input type="text" id="Brand" name="Brand" class="form-control" value="@Model.ProductAttributes.Brand" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Capacity))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="capacity" class="control-label text-primary">Capacity</label>
+                        <input type="text" id="capacity" name="capacity" class="form-control" value="@Model.ProductAttributes.Capacity" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.CaratWeight))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="carat-weight" class="control-label text-primary">Carat wight (approx.):</label>
+                        <input type="text" id="carat-weight" name="carat-weight" class="form-control" value="@Model.ProductAttributes.CaratWeight" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Clarity))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="clarity" class="control-label text-primary">Clarity:</label>
+                        <input type="text" id="clarity" name="clarity" class="form-control" value="@Model.ProductAttributes.Clarity" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.ClaspLength))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="clasp-length" class="control-label text-primary">Clasp length:</label>
+                        <input type="text" id="clasp-length" name="clasp-length" class="form-control" value="@Model.ProductAttributes.ClaspLength" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.ClaspType))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="clasp-type" class="control-label text-primary">Clasp type:</label>
+                        <input type="text" id="clasp-type" name="clasp-type" class="form-control" value="@Model.ProductAttributes.ClaspType" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.COE))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="coe" class="control-label text-primary">COE:</label>
+                        <input type="text" id="coe" name="coe" class="form-control" value="@Model.ProductAttributes.COE" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.CureTemperature))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="cure-temp" class="control-label text-primary">Cure temperature:</label>
+                        <input type="text" id="cure-temp" name="cure-temp" class="form-control" value="@Model.ProductAttributes.CureTemperature" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.CureTime))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="cure-time" class="control-label text-primary">Cure time:</label>
+                        <input type="text" id="cure-time" name="cure-time" class="form-control" value="@Model.ProductAttributes.CureTime" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Density))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="density" class="control-label text-primary">Density:</label>
+                        <input type="text" id="density" name="density" class="form-control" value="@Model.ProductAttributes.Density" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.DrillStyle))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="drill-style" class="control-label text-primary">Drill style:</label>
+                        <input type="text" id="drill-style" name="drill-style" class="form-control" value="@Model.ProductAttributes.DrillStyle" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Durometer))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="durometer" class="control-label text-primary">Durometer:</label>
+                        <input type="text" id="durometer" name="durometer" class="form-control" value="@Model.ProductAttributes.Durometer" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.EndRingOD))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="end-ring-od" class="control-label text-primary">End Ring OD:</label>
+                        <input type="text" id="end-ring-od" name="end-ring-od" class="form-control" value="@Model.ProductAttributes.EndRingOD" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.FabricationMethod))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="fabrication-method" class="control-label text-primary">Fabrication method:</label>
+                        <input type="text" id="fabrication-method" name="fabrication-method" class="form-control" value="@Model.ProductAttributes.FabricationMethod" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.FaceShape))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="face-shape" class="control-label text-primary">Face shape:</label>
+                        <input type="text" id="face-shape" name="face-shape" class="form-control" value="@Model.ProductAttributes.FaceShape" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.FaceSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="face-size" class="control-label text-primary">Face size:</label>
+                        <input type="text" id="face-size" name="face-size" class="form-control" value="@Model.ProductAttributes.FaceSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Finish))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="finish" class="control-label text-primary">Finish:</label>
+                        <input type="text" id="finish" name="finish" class="form-control" value="@Model.ProductAttributes.Finish" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Finished))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="finished" class="control-label text-primary">Finished:</label>
+                        <input type="text" id="finished" name="finished" class="form-control" value="@Model.ProductAttributes.Finished" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.FitsCordChainSize))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="fits-cord-chain-size" class="control-label text-primary">Fits cord/chain size(s):</label>
+                        <input type="text" id="fits-cord-chain-size" name="fits-cord-chain-size" class="form-control" value="@Model.ProductAttributes.FitsCordChainSize" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.FocalLength))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="focal-length" class="control-label text-primary">Focal length:</label>
+                        <input type="text" id="focal-length" name="focal-length" class="form-control" value="@Model.ProductAttributes.FocalLength" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Form))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="form-casting" class="control-label text-primary">Form:</label>
+                        <input type="text" id="form-casting" name="form-casting" class="form-control" value="@Model.ProductAttributes.Form" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Gauge))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="gauge" class="control-label text-primary">Gauge/Thickness:</label>
+                        <input type="text" id="gauge" name="gauge" class="form-control" value="@Model.ProductAttributes.Gauge" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.GermanCutNo))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="german-cut-num" class="control-label text-primary">German cut no.:</label>
+                        <input type="text" id="german-cut-num" name="german-cut-num" class="form-control" value="@Model.ProductAttributes.GermanCutNo" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Grade))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="grade-bead-stone" class="control-label text-primary">Grade:</label>
+                        <input type="text" id="grade-bead-stone" name="grade-bead-stone" class="form-control" value="@Model.ProductAttributes.Grade" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.HandleLength))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="handle-length" class="control-label text-primary">Handle length:</label>
+                        <input type="text" id="handle-length" name="handle-length" class="form-control" value="@Model.ProductAttributes.HandleLength" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Hardness))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="hardness" class="control-label text-primary">Hardness:</label>
+                        <input type="text" id="hardness" name="hardness-clay" class="form-control" value="@Model.ProductAttributes.Hardness" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.HeadShape))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="head-shape" class="control-label text-primary">Head shape:</label>
+                        <input type="text" id="head-shape" name="head-shape" class="form-control" value="@Model.ProductAttributes.HeadShape" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.HeadType))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="head-type" class="control-label text-primary">Head type:</label>
+                        <input type="text" id="head-type" name="head-type" class="form-control" value="@Model.ProductAttributes.HeadType" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.HeadWeight))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="head-weight" class="control-label text-primary">Head weight:</label>
+                        <input type="text" id="head-weight" name="head-weight" class="form-control" value="@Model.ProductAttributes.HeadWeight" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.JawStyle))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="jaw-style" class="control-label text-primary">Jaw style:</label>
+                        <input type="text" id="jaw-style" name="jaw-style" class="form-control" value="@Model.ProductAttributes.JawStyle" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.JewelryType))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="jewelry-type" class="control-label text-primary">Jewelry type:</label>
+                        <input type="text" id="jewelry-type" name="jewelry-type" class="form-control" value="@Model.ProductAttributes.JewelryType" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.KaratPurity))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="karat-purity" class="control-label text-primary">Karat/Purity:</label>
+                        <input type="text" id="karat-purity" name="karat-purity" class="form-control" value="@Model.ProductAttributes.KaratPurity" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.KitSetAsst))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="kitsetasst" class="control-label text-primary">KitSetAsst:</label>
+                        <input type="text" id="kitsetasst" name="kitsetasst" class="form-control" value="@Model.ProductAttributes.KitSetAsst" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.LengthPerWeight))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="length-per-weight" class="control-label text-primary">Length per weight (approx.):</label>
+                        <input type="text" id="length-per-weight" name="length-per-weight" class="form-control" value="@Model.ProductAttributes.LengthPerWeight" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.LensDiameter))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="lens-diameter" class="control-label text-primary">Lens diameter:</label>
+                        <input type="text" id="lens-diameter" name="lens-diameter" class="form-control" value="@Model.ProductAttributes.LensDiameter" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Letter))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="letter" class="control-label text-primary">Letter:</label>
+                        <input type="text" id="letter" name="letter" class="form-control" value="@Model.ProductAttributes.Letter" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.LinkGaThickness))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="link-ga" class="control-label text-primary">Link ga./thickness:</label>
+                        <input type="text" id="link-ga" name="link-ga" class="form-control" value="@Model.ProductAttributes.LinkGaThickness" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.LinkID))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="link-id" class="control-label text-primary">Link ID:</label>
+                        <input type="text" id="link-id" name="link-id" class="form-control" value="@Model.ProductAttributes.LinkID" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.LinkLength))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="link-length" class="control-label text-primary">Link length:</label>
+                        <input type="text" id="link-length" name="link-length" class="form-control" value="@Model.ProductAttributes.LinkLength" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Links))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="links" class="control-label text-primary">Links:</label>
+                        <input type="text" id="links" name="links" class="form-control" value="@Model.ProductAttributes." readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.LiquidusTemperature))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="liquidus-temp" class="control-label text-primary">Liquidus temperature:</label>
+                        <input type="text" id="liquidus-temp" name="liquidus-temp" class="form-control" value="@Model.ProductAttributes.LiquidusTemperature" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.MagnificationPower))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="magnification-powers" class="control-label text-primary">Magnification/Reading Powers:</label>
+                        <input type="text" id="magnification-powers" name="magnification-powers" class="form-control" value="@Model.ProductAttributes.MagnificationPower" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Material))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="material" class="control-label text-primary">Material:</label>
+                        <input type="text" id="material" name="material" class="form-control" value="@Model.ProductAttributes.Material" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.MaximumCuttingCapacity))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="max-cutting-cap" class="control-label text-primary">Max. cutting capacity</label>
+                        <input type="text" id="max-cutting-cap" name="max-cutting-cap" class="form-control" value="@Model.ProductAttributes.MaximumCuttingCapacity" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.MaximumLength))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="max-length" class="control-label text-primary">Maximum length:</label>
+                        <input type="text" id="max-length" name="max-length" class="form-control" value="@Model.ProductAttributes.MaximumLength" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Media))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="media" class="control-label text-primary">Media:</label>
+                        <input type="text" id="media" name="media" class="form-control" value="@Model.ProductAttributes.Media" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.MeltTemperature))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="melt-temp" class="control-label text-primary">Melt temperature:</label>
+                        <input type="text" id="melt-temp" name="melt-temp" class="form-control" value="@Model.ProductAttributes.MeltTemperature" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.MetalColor))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="metal-color" class="control-label text-primary">Metal color:</label>
+                        <input type="text" id="metal-color" name="metal-color" class="form-control" value="@Model.ProductAttributes.MetalColor" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.ModelNo))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="model-style" class="control-label text-primary">Model or style no:</label>
+                        <input type="text" id="model-style" name="model-style" class="form-control" value="@Model.ProductAttributes.ModelNo" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Modes))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="modes" class="control-label text-primary">Modes:</label>
+                        <input type="text" id="modes" name="modes" class="form-control" value="@Model.ProductAttributes.Modes" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.MohsHardness))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="mohs-hardness" class="control-label text-primary">Mohs hardness:</label>
+                        <input type="text" id="mohs-hardness" name="mohs-hardness" class="form-control" value="@Model.ProductAttributes.MohsHardness" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.MountedStoneSizes))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="mounted-stones-size" class="control-label text-primary">Mounted stone(s) size(s):</label>
+                        <input type="text" id="mounted-stones-size" name="mounted-stones-size" class="form-control" value="@Model.ProductAttributes.MountedStoneSizes" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.MountingBezelSizes))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="mounting-bezel-size" class="control-label text-primary">Mounting/Bezel size:</label>
+                        <input type="text" id="mounting-bezel-size" name="mounting-bezel-size" class="form-control" value="@Model.ProductAttributes.MountingBezelSizes" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.NoOfStrands))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="num-strands" class="control-label text-primary">No. of strands:</label>
+                        <input type="text" id="num-strands" name="num-strands" class="form-control" value="@Model.ProductAttributes.NoOfStrands" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.PageCount))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="page-count" class="control-label text-primary">Page count:</label>
+                        <input type="text" id="page-count" name="page-count" class="form-control" value="@Model.ProductAttributes.PageCount" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.PlatformDimensions))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="plataform-dimensions" class="control-label text-primary">Plataform dimensions:</label>
+                        <input type="text" id="plataform-dimensions" name="plataform-dimensions" class="form-control" value="@Model.ProductAttributes.PlatformDimensions" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Power))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="power" class="control-label text-primary">Power:</label>
+                        <input type="text" id="power" name="power" class="form-control" value="@Model.ProductAttributes.Power" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Publisher))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="publisher" class="control-label text-primary">Publisher:</label>
+                        <input type="text" id="publisher" name="publisher" class="form-control" value="@Model.ProductAttributes.Publisher" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.QualityMarked))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="quality-marked" class="control-label text-primary">Quality marked:</label>
+                        <input type="text" id="quality-marked" name="quality-marked" class="form-control" value="@Model.ProductAttributes.QualityMarked" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Range))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="range" class="control-label text-primary">Range:</label>
+                        <input type="text" id="range" name="range" class="form-control" value="@Model.ProductAttributes.Range" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.RefractiveIndex))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="refractive-index" class="control-label text-primary">Refractive index:</label>
+                        <input type="text" id="refractive-index" name="refractive-index" class="form-control" value="@Model.ProductAttributes.RefractiveIndex" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.RunningTime))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="running-time" class="control-label text-primary">Running time:</label>
+                        <input type="text" id="running-time" name="running-time" class="form-control" value="@Model.ProductAttributes.RunningTime" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.SectionDimensions))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="section-dimensions" class="control-label text-primary">Section dimensions:</label>
+                        <input type="text" id="section-dimensions" name="section-dimensions" class="form-control" value="@Model.ProductAttributes.SectionDimensions" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.SettingType))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="setting-type" class="control-label text-primary">Setting type:</label>
+                        <input type="text" id="setting-type" name="setting-type" class="form-control" value="@Model.ProductAttributes.SettingType" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.StakeType))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="shank-type" class="control-label text-primary">Stake type:</label>
+                        <input type="text" id="shank-type" name="shank-type" class="form-control" value="@Model.ProductAttributes.StakeType" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Shape))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="shape" class="control-label text-primary">Shape:</label>
+                        <input type="text" id="shape" name="shape" class="form-control" value="@Model.ProductAttributes.Shape" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Shrinkage))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="shrinkage" class="control-label text-primary">Shrinkage:</label>
+                        <input type="text" id="shrinkage" name="shrinkage" class="form-control" value="@Model.ProductAttributes.Shrinkage" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.SolidusTemperature))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="solidus-temperature" class="control-label text-primary">Solidus temperature:</label>
+                        <input type="text" id="solidus-temperature" name="solidus-temperature" class="form-control" value="@Model.ProductAttributes.SolidusTemperature" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.SpecificGravity))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="specific-gravity" class="control-label text-primary">Specific gravity:</label>
+                        <input type="text" id="specific-gravity" name="specific-gravity" class="form-control" value="@Model.ProductAttributes.SpecificGravity" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.SpoolPkgQuantity))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="package-quantity" class="control-label text-primary">Package quantity:</label>
+                        <input type="text" id="package-quantity" name="package-quantity" class="form-control" value="@Model.ProductAttributes.SpoolPkgQuantity" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.StepDimension))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="step-dimension" class="control-label text-primary">Step dimension:</label>
+                        <input type="text" id="step-dimension" name="step-dimension" class="form-control" value="@Model.ProductAttributes.StepDimension" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.StoneShape))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="stone-shape" class="control-label text-primary">Stone shape:</label>
+                        <input type="text" id="stone-shape" name="stone-shape" class="form-control" value="@Model.ProductAttributes.StoneShape" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.StoneType))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="stone-type-size" class="control-label text-primary">Stone type:</label>
+                        <input type="text" id="stone-type-size" name="stone-type-size" class="form-control" value="@Model.ProductAttributes.StoneType" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Style))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="style-stone-cab-cameo" class="control-label text-primary">Style:</label>
+                        <input type="text" id="style-stone-cab-cameo" name="style-stone-cab-cameo" class="form-control" value="@Model.ProductAttributes.Style" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Subject))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="subject" class="control-label text-primary">Subject:</label>
+                        <input type="text" id="subject" name="subject" class="form-control" value="@Model.ProductAttributes.Subject" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.SubSetName))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="sub-set-name" class="control-label text-primary">Sub-set name:</label>
+                        <input type="text" id="sub-set-name" name="sub-set-name" class="form-control" value="@Model.ProductAttributes.SubSetName" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Sustainable))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="substainable" class="control-label text-primary">Sustainable:</label>
+                        <input type="text" id="substainable" name="substainable" class="form-control" value="@Model.ProductAttributes.Sustainable" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.SwissCut))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="swisscut" class="control-label text-primary">Swiss cut No.:</label>
+                        <input type="text" id="swisscut" name="swisscut" class="form-control" value="@Model.ProductAttributes.SwissCut" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.TensileStrength))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="tensile-strength" class="control-label text-primary">Tensile strength:</label>
+                        <input type="text" id="tensile-strength" name="tensile-strength" class="form-control" value="@Model.ProductAttributes.TensileStrength" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.TipWidth))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="tip-width" class="control-label text-primary">Tip Width:</label>
+                        <input type="text" id="tip-width" name="tip-width" class="form-control" value="@Model.ProductAttributes.TipWidth" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Treatment))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="treatment" class="control-label text-primary">Treatment:</label>
+                        <input type="text" id="treatment" name="treatment" class="form-control" value="@Model.ProductAttributes.Treatment" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.TubeInsideDimension))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="tube-id" class="control-label text-primary">Tube ID:</label>
+                        <input type="text" id="tube-id" name="tube-id" class="form-control" value="@Model.ProductAttributes.TubeInsideDimension" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.TweezerStyle))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="tweezer-style" class="control-label text-primary">Tweezer style:</label>
+                        <input type="text" id="tweezer-style" name="tweezer-style" class="form-control" value="@Model.ProductAttributes.TweezerStyle" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.Type))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="type-clay-enamel" class="control-label text-primary">Type:</label>
+                        <input type="text" id="type-clay-enamel" name="type-clay-enamel" class="form-control" value="@Model.ProductAttributes.Type" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.VulcanizationTemperature))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="vulcanization-temp" class="control-label text-primary">Vulcanization temperature:</label>
+                        <input type="text" id="vulcanization-temp" name="vulcanization-temp" class="form-control" value="@Model.ProductAttributes.VulcanizationTemperature" readonly="">
+                    </div>
+                }
+
+                if (!string.IsNullOrWhiteSpace(Model.ProductAttributes.WeightPerLength))
+                {
+                    <div class="col-sm-4 form-group">
+                        <label for="weight-per-length" class="control-label text-primary">Weight per length (approx.):</label>
+                        <input type="text" id="weight-per-length" name="weight-per-length" class="form-control" value="@Model.ProductAttributes.WeightPerLength" readonly="">
+                    </div>
+                }
+            }
+
+        </div>
+        <div class="row">
+
+            <div class="spacer-md"></div>
+            <div class="col-sm-4 form-group">
+                <label for="catalog-page" class="control-label text-primary">Catalog page:</label>
+                <input type="text" id="catalog-page" name="catalog-page" class="form-control" value="@Model.ProductInfo.CatalogPage" readonly="">
+            </div>
+
+            <div class="col-sm-4 form-group">
+                <label for="weight" class="control-label text-primary">Weight:</label>
+                <input type="text" id="weight" name="weight" class="form-control" value="@Model.ProductInfo.NetWeight" readonly="">
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="shipping-weight" class="control-label text-primary">Shipping weight:</label>
+                <input type="text" id="shipping-weight" name="shipping-weight" class="form-control" value="@Model.ProductInfo.ShipWeight" readonly="">
+            </div>
+        </div>
+        <div class="row">
+            <h2 class="text-center">
+                Item Description
+            </h2>
+            <div class="spacer-md"></div>
+            <div class="col-sm-12 form-group">
+                <label for="description" class="control-label text-primary">Description:</label>
+                <textarea type="text" id="description" name="description" class="form-control" rows="7" readonly="">@Model.ProductInfo.MetaDescription</textarea>
+            </div>
+            <div class="col-sm-12 form-group">
+                <label for="additional-specs" class="control-label text-primary">Additional specifications:</label>
+                <textarea type="text" id="additional-specs" name="additional-specs" class="form-control" rows="3" readonly="">@Model.ProductInfo.AdditionalSpecs</textarea>
+            </div>
+            <div class="col-sm-12 form-group">
+                <label for="note" class="control-label text-primary">Please note:</label>
+                <textarea type="text" id="note" name="note" class="form-control" rows="7" readonly="">@Model.ProductInfo.PleaseNote</textarea>
+            </div>
+        </div>
+    }
+
+    <div class="spacer-md"></div>
+    <div class="spacer-md"></div>
+
+</div>

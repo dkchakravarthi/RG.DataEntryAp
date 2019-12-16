@@ -1,0 +1,24 @@
+﻿@model DataEntry.Models.VariantModel
+
+<div class="col-sm-3 variant" style="padding-top: 10px;">
+    <label for="Variants-@Model.ID" class="control-label">@Model.Description:</label>
+    <div class="row">
+        <div class="col-sm-12 form-inline">
+            <div class="input-group width-100">
+                <select class="form-control variant-name" name="StyleTraitValues"  id="StyleTraitValues-@Model.ID" data-id="@Model.ID">
+                    <option value=""></option>
+                    @foreach (var Value in Model.Values)
+                    {
+                        <option @(Value.Selected ? "selected='selected'" : "") value="@Value.ID">@Value.Value</option>
+                    }
+                </select>
+
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-success add-traitvalue-btn"  data-id="@Model.ID" data-description="@Model.Description" data-add-target="#StyleTraitValues-@Model.ID">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

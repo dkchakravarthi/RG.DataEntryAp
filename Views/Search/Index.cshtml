@@ -1,0 +1,27 @@
+﻿@model DataEntry.Models.SearchResultsModel
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="padding-top: 40px;">
+            <h2 style="text-align: center;">@Model.Products.Count() Products</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var Product in Model.Products)
+        {
+            <div class="col-sm-2 col-xs-3" style="min-height: 275px;">
+                <a href="~/Search/Product?ItemNumber=@Product.ERPNumber">
+                    <img src="https://products.riogrande.com/products/@(Product.ERPNumber).jpg"
+                         alt="@Product.ERPNumber"
+                         class="img-responsive img-thumbnail"
+                         onerror="this.src='@Url.Content("~/Content/images/image_soon.gif")';">
+                    <label class="control-label text-primary">@Product.ERPNumber</label>
+                    <label class="control-label text-primary">@Product.ShortDescription</label>
+                </a>
+            </div>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,6 @@
+﻿@model List<DataEntry.Models.VariantModel>
+
+@foreach (var variant in Model)
+{
+    @Html.Partial("_ProductVariant", variant)
+}

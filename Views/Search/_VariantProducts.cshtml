@@ -1,0 +1,16 @@
+﻿@model List<DataEntry.Models.VariantProductModel>
+
+@foreach (var Product in Model)
+{
+    <span class="badge m-5" id="VariantProduct-@Product.ProductID" style="width: 150px; white-space:inherit; position:relative">
+        <strong style="font-size:16px">@Product.ItemNumber</strong><br />
+
+        @foreach (var variant in Product.Variants)
+        {
+            @:@variant.StyleTraitDescription: @variant.StyleTraitValue
+        }
+            
+        <a href="#Remove" class="RemoveProductFromVariant" data-id="@Product.ProductID" style="position:absolute;top:5px;right:5px;" title="remove"><span class="glyphicon glyphicon-minus-sign"></span></a>
+    </span>
+}
+

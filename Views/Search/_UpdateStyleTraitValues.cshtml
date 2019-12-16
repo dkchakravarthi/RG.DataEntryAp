@@ -1,0 +1,15 @@
+﻿@model List<DataEntry.Models.VariantValueModel>
+
+
+@foreach (var Value in Model)
+{
+    <div class="form-group col-sm-4">
+        <label class="control-label" for="traitvalue-1">Value</label>
+        <input type="text" name="traitvalue-1" id="traitvalue-1" class="form-control" value="@Value.Value" readonly="">
+    </div>
+
+    <div class="form-group col-sm-2">
+        <label class="control-label" for="UpdateStyleTraitValueSortOrder-@Value.ID">Sort order</label>
+        <input type="number" name="UpdateStyleTraitValueSortOrder" id="UpdateStyleTraitValueSortOrder-@Value.ID" class="form-control" value="@Value.SortOrder" data-id="@Value.ID">
+    </div>
+}

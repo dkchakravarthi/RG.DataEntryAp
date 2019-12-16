@@ -1,0 +1,377 @@
+﻿@using DataEntry.Helpers;
+@model DataEntry.Models.ProductModel
+
+<script src="@Url.Content("~/Scripts/Product.js?Rev=1")"></script>
+
+<div class="container">
+    @if (Model.ProductInfo == null)
+    {
+        <div class="row">
+            <div class="col-md-12" style="padding-top: 40px;">
+                <h2 style="text-align: center;">Item number @Model.ItemNumber is not in Insite.</h2>
+            </div>
+        </div>
+    }
+    else
+    {
+        <form id="frmProduct">
+            <!--
+            <div style="position: fixed; top: 50px; left: 25px; z-index: 100;">
+                <button class="btn btn-md btn-success glyphicon glyphicon-arrow-left" id="btnPreviousItem"></button>
+            </div>
+            <div style="position: fixed; top: 50px; right: 25px; z-index: 100;">
+                <button class="btn btn-md btn-success glyphicon glyphicon-arrow-right" id="btnNextItem"></button>
+            </div>
+            -->
+            <a id="HeadingInfo"></a>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="spacer-md"></div>
+                </div>
+                <div class="col-xs-1" style="padding: 0px;">
+                    <div class="divPreviousItem" style="float: left;">
+                        @if (!string.IsNullOrWhiteSpace(Model.PreviousItemNumber))
+                        {
+                            <button class="btn btn-sm btn-success glyphicon glyphicon-arrow-left btnMove" id="btnPreviousItem" data-id="@Model.PreviousItemNumber"></button>
+                        }
+                    </div>
+                </div>
+                <div class="col-xs-10 text-center">
+                    <h1 class="mt-0">@Model.ProductInfo.ShortDescription</h1>
+                    <input type="hidden" name="ProductID" value="@Model.ProductInfo.Id" />
+                    <hr />
+                </div>
+                <div class="col-xs-1" style="padding: 0px;">
+                    <div class="divNextItem" style="float: right;">
+                        @if (!string.IsNullOrWhiteSpace(Model.NextItemNumber))
+                        {
+                            <button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right btnMove" id="btnNextItem" data-id="@Model.NextItemNumber"></button>
+                        }
+                    </div>
+                </div>
+                
+                <div class="col-sm-4">
+                    <img src="https://products.riogrande.com/products/@(Model.ItemNumber).jpg" alt="Alternate Text" class="img-responsive img-thumbnail">
+                </div>
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <label for="ShortDescription" class="control-label">Name:</label>
+                            <input type="text" id="ShortDescription" name="ShortDescription" class="form-control" value="@Model.ProductInfo.ShortDescription">
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="ItemNumber" class="control-label">Item number:</label>
+                                <input type="text" id="ItemNumber" name="ItemNumber" class="form-control" value="@Model.ItemNumber">
+                            </div>
+                            <div class="form-group">
+                                <label for="ProductManager" class="control-label">PM:</label>
+                                <input type="text" id="ProductManager" name="ProductManager" class="form-control" readonly value="@Model.ProductInfo.ProductManager">
+                            </div>
+                            <div class="form-group">
+                                <label for="SupplyManager" class="control-label">SM:</label>
+                                <input type="text" id="SupplyManager" name="SupplyManager" class="form-control" readonly value="@Model.ProductInfo.SupplyManager">
+                            </div>
+                            <div class="form-group">
+                                <label for="country-origin" class="control-label">Available in kit, set, assortment:</label>
+                                <input type="text" id="AvailableInKitSetAsst" name="AvailableInKitSetAsst" class="form-control" value="@Model.ProductInfo.AvailableInKitSetAsst">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6" name="Categories">
+                            <label for="Categories" class="control-label">Category:</label>
+                            @{
+                                Guid? ParentCategoryID = null;
+                                for (int i = 0; i < Model.CategoryList.Count() + 1; i++)
+                                {
+                                    var CategoryListName = (i < Model.CategoryList.Count() ? Model.CategoryList[i] : "");
+                                    var Categories = SearchHelper.GetCategories(ParentCategoryID).ToList();
+
+                                    if (Categories.Count() > 0)
+                                    {
+                                        <select name="Categories" class="form-control">
+                                            <option value=""></option>
+
+                                            @foreach (var Category in Categories)
+                                            {
+                                                <option @(Category.Name == CategoryListName ? "selected='selected'" : "") value="@Category.Id">@Category.Name</option>
+
+                                                if (Category.Name == CategoryListName)
+                                                {
+                                                    ParentCategoryID = Category.Id;
+                                                }
+                                            }
+                                        </select>
+                                    }
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="spacer-md"></div>
+                <div class="col-sm-12 form-group">
+                    <label for="MetaDescription" class="control-label">Description:</label><span class="glyphicon glyphicon-globe web-preview text-success ml-5" data-target="#MetaDescription"></span>
+                    <textarea type="text" id="MetaDescription" name="MetaDescription" class="form-control autoExpand" value="" rows="5" data-min-rows="5">@Model.ProductInfo.MetaDescription</textarea>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <label for="AdditionalSpecs" class="control-label">Additional Specifications:</label><span class="glyphicon glyphicon-globe web-preview text-success ml-5" data-target="#AdditionalSpecs"></span>
+                    <textarea type="text" id="AdditionalSpecs" name="AdditionalSpecs" class="form-control autoExpand" value="" rows="3" data-min-rows="3">@Model.ProductInfo.AdditionalSpecs</textarea>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <label for="PleaseNote" class="control-label">Please Note:</label><span class="glyphicon glyphicon-globe web-preview text-success ml-5" data-target="#PleaseNote"></span>
+                    <textarea type="text" id="PleaseNote" name="PleaseNote" class="form-control autoExpand" value="" rows="5" data-min-rows="5">@Model.ProductInfo.PleaseNote</textarea>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <label for="MetaKeyword" class="control-label">Keywords:</label><span class="glyphicon glyphicon-globe web-preview text-success ml-5" data-target="#MetaKeyword"></span>
+                    <textarea type="text" id="MetaKeyword" name="MetaKeyword" class="form-control autoExpand text-left" value="" rows="3" data-min-rows="3">@Model.ProductInfo.MetaKeywords</textarea>
+                </div>
+
+                <div class="col-sm-12 form-group">
+                    <label for="KitSetincludes" class="control-label">Kit, Set includes:</label><span class="glyphicon glyphicon-globe web-preview text-success ml-5" data-target="#KitSetincludes"></span>
+                    <textarea id="KitSetincludes" name="KitSetincludes" class="form-control autoExpand" value="" rows="3" data-min-rows="3">@Model.ProductInfo.KitSetincludes</textarea>
+                </div>
+
+                <a id="Attribute"></a>
+                <div class="col-sm-12">
+                    <div class="spacer-md"></div>
+                    <h2 class="text-center">Attribute Section</h2>
+                </div>
+                <div class="col-sm-4 col-sm-offset-4 text-center form-group">
+                    <label for="InfoTemplate" class="control-label">Info template:</label>
+                    <select id="InfoTemplate" name="InfoTemplate" class="form-control" data-itemnumber="@Model.ItemNumber">
+                        <option value="">All attributes</option>
+
+                        @foreach (var template in Model.InfoTemplates)
+                        {
+                            <option @(Model.ProductInfo.InfoTemplateID == template.Id ? "selected='selected'" : "") value="@template.Id">@template.Name</option>
+                        }
+
+                    </select>
+                    <div class="collapse error-container">
+                        <small class="text-danger">There has been an error with the submition</small>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="template" class="row" data-status="LOADING">
+                @*@Html.Action("GetAttributes", new { ItemNumber = Model.ItemNumber, InfoTemplateID = Model.ProductInfo.InfoTemplateID })
+    @Html.Action("GetAttributes", new { ProductAttributes = Model.ProductAttributes, Attributes = Model.Attributes, AttributeSettings = Model.AttributeSettings })*@
+                <div class="preloader-2">
+                    <div>Loading Attributes</div>
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                    <span class="line line-3"></span>
+                    <span class="line line-4"></span>
+                    <span class="line line-5"></span>
+                    <span class="line line-6"></span>
+                    <span class="line line-7"></span>
+                    <span class="line line-8"></span>
+                    <span class="line line-9"></span>
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <hr />
+            </div>
+
+            <a id="Variant"></a>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="spacer-md"></div>
+                    <h2 class="text-center">Variant section</h2>
+                </div>
+
+                <div class="variant-container">
+                    <div class="col-sm-3" style="padding-top: 10px;">
+                        <label class="control-label">Variant parent:</label>
+                        <div class="input-group">
+                            <select id="StyleClass" class="form-control" name="StyleClass" data-productid="@Model.ProductInfo.Id">
+                                <option value=""></option>
+                                @foreach (var variant in Model.AllVariants)
+                                {
+                                    <option @(Model.ProductInfo.ProductVariantStyleClassID == variant.StyleClassID
+                                        || (Model.ProductInfo.ProductVariantStyleClassID == null && variant.Name == Model.ProductInfo.ERPNumber) ? "selected='selected'" : "") value="@variant.StyleClassID">@variant.Name</option>
+                                }
+                            </select>
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-success add-variantparent-btn"><span class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                        </div>
+                        <div class="collapse error-container">
+                            <small class="text-danger">There has been an error with the submition</small>
+                        </div>
+                    </div>
+
+                    <div id="traits" data-status="LOADING">
+                        @*Html.Action("GetVariants", new { ProductID = Model.ProductInfo.Id, StyleClassID = Model.ProductInfo.ProductVariantStyleClassID })*@
+                        <div class="preloader-2" style="width:500px;">
+                            <div>Loading Variants</div>
+                            <span class="line line-1"></span>
+                            <span class="line line-2"></span>
+                            <span class="line line-3"></span>
+                            <span class="line line-4"></span>
+                            <span class="line line-5"></span>
+                            <span class="line line-6"></span>
+                            <span class="line line-7"></span>
+                            <span class="line line-8"></span>
+                            <span class="line line-9"></span>
+                        </div>
+                    </div>
+                    <div id="trait-value-1" class="col-sm-3" style="padding-top: 35px;">
+                        <div>
+                            <button class="btn btn-block btn-success-alt add-trait-btn" style="display: none;">Add variant</button>
+                        </div>
+                        <div>
+                            <button class="btn btn-block btn-success-alt switch-trait-order-btn" style="display: none;" data-productid="@Model.ProductInfo.Id">Switch variant order</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div id="variant-parent-item-list" class="mt-5 text-center">
+                        @*Html.Action("GetProductsByStyleParentID", new { StyleClassID = Model.ProductInfo.ProductVariantStyleClassID })*@
+                        <div class="preloader-2">
+                            <div>Loading Variant Item Numbers</div>
+                            <span class="line line-1"></span>
+                            <span class="line line-2"></span>
+                            <span class="line line-3"></span>
+                            <span class="line line-4"></span>
+                            <span class="line line-5"></span>
+                            <span class="line line-6"></span>
+                            <span class="line line-7"></span>
+                            <span class="line line-8"></span>
+                            <span class="line line-9"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <hr />
+            </div>
+
+
+            <a id="AdditionalInfo"></a>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="spacer-md"></div>
+                    <h2 class="text-center">Additional info</h2>
+                </div>
+
+                <div class="col-sm-4 form-group">
+                    <label for="CatalogPage" class="control-label">Current catalog page:</label>
+                    <input type="text" id="CatalogPage" name="CatalogPage" class="form-control" readonly value="@Model.ProductInfo.CatalogPage">
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label for="NewItemMeetingDate" class="control-label">New item meeting date:</label>
+                    <input type="text" id="NewItemMeetingDate" name="NewItemMeetingDate" class="form-control" value="@Model.ProductInfo.NewItemMeetingDate">
+                </div>
+                <div class="col-sm-12 form-group">
+                    <label for="PrintGridDesc" class="control-label">Print grid description:</label>
+                    <textarea id="PrintGridDesc" name="PrintGridDesc" class="form-control autoExpand" rows="5">@Model.ProductInfo.PrintGridDesc</textarea>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label for="ProdCatSection" class="control-label">Prod cat section:</label>
+                    <input type="text" id="ProdCatSection" name="ProdCatSection" class="form-control" value="@Model.ProductInfo.ProdCatSection">
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label for="ProdPageNmbr" class="control-label">Prod page number:</label>
+                    <input type="text" id="ProdPageNmbr" name="ProdPageNmbr" class="form-control" value="@Model.ProductInfo.ProdPageNmbr">
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label for="ProductnamePrint" class="control-label">Name (print):</label>
+                    <input type="text" id="ProductnamePrint" name="ProductnamePrint" class="form-control" value="@Model.ProductInfo.ProductnamePrint">
+                </div>
+                <div class="col-sm-12 form-group">
+                    <label for="ProductPrintDesc" class="control-label">Description (print):</label>
+                    <textarea id="ProductPrintDesc" name="ProductPrintDesc" class="form-control autoExpand" rows="5">@Model.ProductInfo.ProductPrintDesc</textarea>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label for="SaleUOMName" class="control-label">Selling UOM:</label>
+                    <input type="text" id="SaleUOMName" name="SaleUOMName" class="form-control" readonly value="@Model.ProductInfo.SaleUomName">
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label for="Weight" class="control-label">Weight:</label>
+                    <input type="text" id="Weight" name="Weight" class="form-control" readonly value="@Model.ProductInfo.NetWeight">
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label for="ShipWeight" class="control-label">Shipping weight:</label>
+                    <input type="text" id="ShipWeight" name="ShipWeight" class="form-control" readonly value="@Model.ProductInfo.ShipWeight">
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label for="CustomService" class="control-label">Custom service:</label>
+                    <input type="text" id="CustomService" name="CustomService" class="form-control" readonly value="@Model.ProductInfo.CustomService">
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label for="IsExclusive" class="control-label">Exclusive:</label>
+                    <input type="text" id="IsExclusive" name="IsExclusive" class="form-control" readonly value="@Model.ProductInfo.IsExclusive">
+                </div>
+
+                
+                <div class="col-sm-4 form-group">
+                    <label for="Chemicals" class="control-label">Chemicals:</label>
+                    @for (int i = 0; i <= Model.ProductChemicals.Count(); i++)
+                    {
+                        string CurrentChemicalID = "";
+                        if (i < Model.ProductChemicals.Count)
+                        {
+                            CurrentChemicalID = Model.ProductChemicals[i].ChemicalId.ToString();
+                        }
+
+                        <select name="Chemicals" class="form-control">
+                            <option value=""></option>
+                            @foreach (var Chemical in Model.AllChemicals)
+                            {
+                                <option @(Chemical.Id.ToString() == CurrentChemicalID ? "selected='selected'" : "") value="@Chemical.Id">@Chemical.Chemical</option>
+                            }
+                        </select>
+                    }
+                </div>
+            </div>
+
+            <div class="spacer-md"></div>
+            <div class="spacer-md"></div>
+
+            <div style="position: fixed; bottom: 50px;right:25px;z-index: 100;">
+                <button class="btn btn-lg btn-danger" id="btnReset">Reset</button>
+                <button class="btn btn-lg btn-primary">Submit</button>
+            </div>
+            
+        </form>
+
+                                }
+    <div class="spacer-md"></div>
+    <div class="spacer-md"></div>
+    <div class="spacer-md"></div>
+    <div class="spacer-md"></div>
+
+</div>
+      
+<script>
+    CKEDITOR.replace('PrintGridDesc');
+    CKEDITOR.replace('ProductPrintDesc');
+    CKEDITOR.replace('KitSetincludes');
+    CKEDITOR.replace('PleaseNote');
+    CKEDITOR.replace('AdditionalSpecs');
+    CKEDITOR.replace('MetaDescription');
+</script>
+
+@section HeaderMenu {
+    <div class="mb-5 text-center HeaderMenu">
+        <div class="col-sm-3">
+            <a href="#HeadingInfo">Heading Info</a>
+        </div>
+        <div class="col-sm-3">
+            <a href="#Attribute">Attribute</a>
+        </div>
+        <div class="col-sm-3">
+            <a href="#Variant">Variant</a>
+        </div>
+        <div class="col-sm-3">
+            <a href="#AdditionalInfo">Additional Info</a>
+        </div>
+    </div>
+}
